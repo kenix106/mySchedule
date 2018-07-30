@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_vertical"
+    android:background="@color/colorPrimary">
+
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:id="@+id/name_dialog"
+        android:background="@drawable/bg_white_borderd_primary"
+        android:inputType="text"
+        android:hint="Name of the Event"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:background="@drawable/bg_white_borderd_primary"
+        android:id="@+id/date_dialog"
+        android:hint="Date of the Event dd/mm/yy"
+         />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:background="@drawable/bg_white_borderd_primary"
+        android:id="@+id/hour_dialog"
+        android:hint="Time of the event"
+         />
+
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/save_dialog"
+        android:src="@mipmap/baseline_event_white_48"
+        android:theme="@style/AccentButton"/>
+
+</LinearLayout>
