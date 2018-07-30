@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import cl.evilgenius.myschedule.EventClickListener;
 import cl.evilgenius.myschedule.R;
 import cl.evilgenius.myschedule.data.Queries;
 import cl.evilgenius.myschedule.models.Event;
@@ -18,6 +19,12 @@ import cl.evilgenius.myschedule.models.Event;
 public class sheduleAdapter extends RecyclerView.Adapter<sheduleAdapter.ViewHolder> {
 
     private List<Event> eventList = new Queries().eventList();
+
+    private EventClickListener listener;
+
+    public sheduleAdapter(EventClickListener listener) {
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
@@ -28,7 +35,7 @@ public class sheduleAdapter extends RecyclerView.Adapter<sheduleAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         Event event = eventList.get(i);
         viewHolder.name.setText(event.getName());
         viewHolder.date.setText(event.getDate());
@@ -38,13 +45,30 @@ public class sheduleAdapter extends RecyclerView.Adapter<sheduleAdapter.ViewHold
         viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
 
+                            int auxPosition = viewHolder.getAdapterPosition();
+                            Event auxEvent = eventList.get(auxPosition);
+                            auxEvent.setDone(true);
+                            auxEvent.save();
+                            eventList.remove(auxPosition);
+                            notifyItemRemoved(auxPosition);
+
+                        }
+                    }, 600);
+                }
             }
         });
         //estamos a la escucha si se apreta la opcion
         viewHolder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Event auxEvent = eventList.get(viewHolder.getAdapterPosition());
+                listener.clickID(auxEvent.getId());
 
             }
         });
@@ -70,7 +94,7 @@ public class sheduleAdapter extends RecyclerView.Adapter<sheduleAdapter.ViewHold
         return eventList.size();
     }
 
-    public void update(Event event){
+    public void update(Event event) {
         eventList.add(event);
         notifyDataSetChanged();
     }

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import cl.evilgenius.myschedule.adapters.sheduleAdapter;
 import cl.evilgenius.myschedule.models.Event;
@@ -17,7 +18,7 @@ import cl.evilgenius.myschedule.models.Event;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements EventClickListener {
 
     private sheduleAdapter adapter;
 
@@ -50,15 +51,20 @@ public class MainActivityFragment extends Fragment {
     }*/
 
 
-         adapter = new sheduleAdapter();
+        adapter = new sheduleAdapter(this);
         recyclerView.setAdapter(adapter);
 
     }
 
-   public void updateList (Event event){
+    public void updateList(Event event) {
         adapter.update(event);
-       Log.e("save, EVENT", event.getName());
-       Log.e("save, EVENT", event.getDate());
-       Log.e("save, EVENT", event.getHour());
-   }
+        Log.e("save, EVENT", event.getName());
+        Log.e("save, EVENT", event.getDate());
+        Log.e("save, EVENT", event.getHour());
+    }
+
+    @Override
+    public void clickID(long id) {
+        Toast.makeText(getContext(), String.valueOf(id), Toast.LENGTH_SHORT).show();
+    }
 }
